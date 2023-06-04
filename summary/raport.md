@@ -32,7 +32,7 @@ Kolejnym ważnym etapem preprocessingu była standaryzacja danych. Zważając na
 Zbiór danych do budowy dostępnych w witrynie *kaggle* podzieliliśmy przed rozpoczęciem analizy na zbiór treningowy oraz walidacyjny, korzystając ze stratyfikacji targetu - z uwagi na to, że klasa o wartości 1 była niedoreprezentowana, musieliśmy zrobić wszystko, aby podział zbioru był jak najlepszy.
 <br />
 
-![class_imbalance](plots/class%20imbalance.png)
+![class_imbalance](../plots/class%20imbalance.png)
 <br />
 
 W trakcie dalszej pracy nad projektem, np. już w trakcie budowania modelów wielokrotnie wracaliśmy do etapu preprocesingu, gdyż okazało się, że mamy nowe pomysły na przygotowanie danych lub odkryliśmy nowe, ciekawe zależności w danych. Jedną z najbardziej widowiskowych zmian udało się odnaleźć na etapie [weryfikacji istotności cech](###Ocena-predykcyjności-cech) w modelu lasów losowych. Okazało się, że bardzo istotnym elementem preprocessingu jest odizolowanie braków danych w zmiennej `WheelTypeID` do nowej zmiennej w ramach metody `OneHotEncoding`, gdyż znaczna część obserwacji posiadających brak danych w tej kolumnie była złym zakupem.
@@ -57,7 +57,7 @@ Następnie zajęliśmy się regularyzacją modelu regresji logistycznej - wyboru
 
 Znaczną poprawę prezycji do 75.56% otrzymaliśmy stosując wielomianową regresję drugiego rzędu, ponadto model ten osiągnął najlepszy rezultat gini.
 
-![reg_coef](plots/reg_confusion.png)
+![reg_coef](../plots/reg_confusion.png)
 
 <br />
 
@@ -65,7 +65,7 @@ Znaczną poprawę prezycji do 75.56% otrzymaliśmy stosując wielomianową regre
 
 Współczynnik istotności cech funkcji decyzyjnej pozwala nam zaobserwować, które kolumny miały największe znaczenie przy podejmowanej przez model dezycji:
 
-![reg_coef](plots/reg_coef.png)
+![reg_coef](../plots/reg_coef.png)
 
 Dane pochodzą z modelu reularyzowanego za pomocą grid search. Obserwujemy, że największe znaczenie w modelu miał brak informacji o typie opon samochodu, a następnie informacja, czy na samodchód będzie większy popyt. Widać, że model wyraźnie 'skupiał się' również na niektórych markach samochodów.
 
@@ -73,11 +73,11 @@ Najlepsze rezultaty gini oraz krzywe roc osiągnął model wielomianowej regresj
 
 Dla danych treningowych: gini = 0.6167
 
-![reg_coef](plots/reg_roc_train.png)
+![reg_coef](../plots/reg_roc_train.png)
 
 Dla danych walidacyjnych: gini = 0.5217
 
-![reg_coef](plots/reg_roc_val.png)
+![reg_coef](../plots/reg_roc_val.png)
 
 <br />
 
@@ -102,7 +102,7 @@ Dokonaliśmy przeszukiwania siatki hiperparametrów: maksymalnej głębokości, 
 
 Rezultaty regularyzacji okazały się satysfakcjonujące, uzyskaliśmy 89.95% dokładności oraz 81.46% precyzji na zbiorze walidacyjnym, natomiast w tym przypadku model się nie przetrenowuje.
 
-![reg_coef](plots/dct_confusion.png)
+![reg_coef](../plots/dct_confusion.png)
 
 <br />
 
@@ -110,17 +110,17 @@ Rezultaty regularyzacji okazały się satysfakcjonujące, uzyskaliśmy 89.95% do
 
 Atrybut feature_importance drzewa decyzyjnego pozwala nam określić, jak bardzo poszczególne cechy przyczyniają się do podejmowania decyzji w modelu. W regularyzowanym modelu drzewa decyzyjnego wyraźnie kluczową cechą okazał się brak danych dla typu koła:
 
-![reg_coef](plots/dct_feature_importance.png)
+![reg_coef](../plots/dct_feature_importance.png)
 
 Niestety dla drzewa decyzyjnego nie otrzymujemy zatysfakcjonującego wyniku gini i krzywych roc:
 
 Dla danych treningowych: gini = 0.4644
 
-![reg_coef](plots/dct_roc_train.png)
+![reg_coef](../plots/dct_roc_train.png)
 
 Dla danych walidacyjnych: gini = 0.4343
 
-![reg_coef](plots/dct_roc_val.png)
+![reg_coef](../plots/dct_roc_val.png)
 <br />
 
 ### Podsumowanie
@@ -140,7 +140,7 @@ Algorytm KNN Classifier polega na klasyfikowaniu nowej próbki poprzez porównan
 ### Przygotowanie modelu
 Po wykonaniu hiperparametryzacji za pomocą metody grid search sprawdziliśmy jak sprawuje się model na wydzielonym zbiorze walidacyjnym.
 
-![roc curve](plots/KNN_roc.png)
+![roc curve](../plots/KNN_roc.png)
 
 Krzywa ROC dla modelu KNN, na zbiorze walidacyjnym.
 
@@ -154,26 +154,26 @@ Model KNN sprawuje się dużo gorzej przy wielu wymiarach. W związku z tym post
 
 Po odpowiednim przygotowaniu danych postanowiliśmy wybrać liczbę wymiarów do której ten algorytm będzie skalować nasze danę, aby zachować dostatecznie dużo informacji, przy jednoczesnej redukcji wymiarów. W związku z tym ustaliliśmy, że należy ograniczyć liczbę wymiarów tak aby łączna wariancja miała wartość co najmniej 95%.
 
-![pca](plots/PCA_variance.png)
+![pca](../plots/PCA_variance.png)
 
 
 Ustatliliśmy docelową liczbę wymiarów jako 31 - co wydawało się rozsądnym balansem pomiędzy utratą informacji, a redukcją wymiarów. Zbiór danych w wyniku preprocessingu uwzględniającego m.in. One-Hot encoding, a także innych operacji zwiększające liczbę wymiarów danych spowodowały, że ramka zawierała 103 wymiary.
 
 Okazało się jednak, że zastosowana redukcja wymiarów nie przyniosła satysfakcjonujących rezultatów, w kwestii wydajności modelu gdyż model po redukcji wymiarów sprawował się gorzej niż przed, co widać na załączonym wykresie krzywej ROC.
 
-![roc curve](plots/KNN_pca_roc.png)
+![roc curve](../plots/KNN_pca_roc.png)
 
 Wskaźnik gini spadł do około `0.25`, co wydawało nam się całkiem sporą różnicą. Zdecydowaliśmy, że model nie sprawował się lepiej od tego przed zastosowaniem PCA, chyba że wziąć pod uwagę czas jego działania. Algorytm KNN operujący na zmodyfikowanym zbiorze danych działał szybciej, ale przyspieszenie algorytmu nie było naszym celem.
 <br />
 
 Macierz pomyłek dla modelu przed redukcją wymiarów:
 
-![conf_knn](plots/KNN_confusion.png)
+![conf_knn](../plots/KNN_confusion.png)
 
 
 Wynik algorytmu na danych testowych z kaggla:
 
-![knn_res](plots/KNN_res.png)
+![knn_res](../plots/KNN_res.png)
 <br />
 
 ### Podsumowanie
@@ -190,7 +190,7 @@ Jednym z najczęściej używanych modeli w zadaniach uczenia maszynowego jest la
 Przy użyciu standardowych hiperparametrów wytrenenowaliśmy pierwszy model tego typu, jak się okazało sprawował się on znacznie lepiej niż poprzednie modele innych typów:
 
 
-![roc curve](plots/RF_base_roc.png)
+![roc curve](../plots/RF_base_roc.png)
 
 Wartość gini dla tego modelu wynosiła około `0.5`
 <br />
@@ -204,7 +204,7 @@ W trakcie poszukiwania najlepszego modelu za pomocą zestawów hiperparametrów 
 Jako jedną z miar jakości otrzymanego w ten sposób modelu zastosowaliśmy ponownie krzywą ROC, pokazującą stosunek czułości (ang. sensitivity) do specyficzności (ang. specificity). 
 
 
-![roc curve](plots/RF_random_roc.png)
+![roc curve](../plots/RF_random_roc.png)
 
 Wartość gini dla tego modelu wynosiła również około 0.5, ale mniej niż w poprzednim przypadku.
 
@@ -228,7 +228,7 @@ Jak się okazało najbardziej istotną kolumną predykcyjną była kolumna oznac
 
 Obserwacja ta nie była przez nas początkowo zauważona. Istotne wgłębienie się w problem i dokładne przeanalizowanie danych pozwoliło nam zauważyć przeoczoną, ale bardzo ważną informację dla sprawowania się modelu, co automatycznie zwiększyło predykcyjność wszystkich naszych modelów.
 
-![image.png](raport_files/image.png)
+![image.png](image.png)
 
 Pozostałymi cechami samochodów, które dawały dużo informacji o tym, czy zakup był dobry lub nie, były między innymi wiek samochodu, jego cena, a także wartość ubezpieczenia auta. 
 
@@ -236,7 +236,7 @@ Pozostałymi cechami samochodów, które dawały dużo informacji o tym, czy zak
 
 ### Ostateczny wynik na danych z kaggle
 
-![image-2.png](raport_files/image-2.png)
+![image-2.png](image-2.png)
 
 # XGBoost
 
@@ -264,19 +264,19 @@ Jak się okazało najlepszy model przy cross-validation=3 sprawdził się XGBoos
 ### Wizualizacje
 A jeżeli chodzi o macierz pomyłek to wygląda ona następująco:
 
-![Confusion Matrix](plots/conf-mat-xgboost.png)
+![Confusion Matrix](../plots/conf-mat-xgboost.png)
 
 A krzywe roc tak:
 
 Dla danych treningowych:
 
-![Roc xgb](plots/roc_train_xgboost.png)
+![Roc xgb](../plots/roc_train_xgboost.png)
 
 Gini wynosi tutaj 0.61
 
 Dla danych testowych:
 
-![Roc xgb test](plots/roc_test_xgboost.png)
+![Roc xgb test](../plots/roc_test_xgboost.png)
 
 A tutaj wartość gini 0.52
 
@@ -293,7 +293,7 @@ Klasyfikator głosujący to jedna z technik uczenia zespołowego, która polega 
 Do głosowania użyliśmy modeli regresji logistycznej, drzewa decyzyjnego, lasu losowego oraz xgboost z wybranymi wcześniej najlepszymi hiperparametrami. W naszym modelu użyliśmy metody soft voting. Za pomocą losowego przeszukiwania siatki wybraliśmy również najbardziej korzystny pod względem dokładności zestaw wag charakteryzujący stosunek istotności głosu każdego modelu w głosowaniu. Nalepsze rezultaty otrzymaliśmy uwzględniając jedynie las losowy oraz xgboost. Wyniki są bardzo zadowalające - 90.09% dokładności oraz 84.08% precyzji dla zbioru walidacyjnego, przy jednoczesnym braku oznak przetrenowania modelu.
 
 
-![reg_coef](plots/voting_confusion.png)
+![reg_coef](../plots/voting_confusion.png)
 <br />
 
 ### Wizualizacje
@@ -302,11 +302,11 @@ Krzywa roc oraz rezultat gini dla zbioru walidacyjnego kształtują się na pozi
 
 Dla danych treningowych: gini = 0.8682
 
-![reg_coef](plots/voting_roc_train.png)
+![reg_coef](../plots/voting_roc_train.png)
 
 Dla danych walidacyjnych: gini = 0.5256
 
-![reg_coef](plots/voting_roc_val.png)
+![reg_coef](../plots/voting_roc_val.png)
 
 
 
@@ -342,7 +342,7 @@ W przypadku XGboosta metoda oversamplingu nie spisała się najlepiej, gdyż war
 
 Wykonując testy za pomocą algorytmu *kaggle'a* na zbiorze testowym uzyskaliśmy przyzwoite rezultaty w porównaniu do pozostałych zawodników biorących udział w już zakończonych zawodach. Nasz najlepszy wynik osiągnięty za pomocą modelu lasu losowego dał nam satysfakcjonujący wynik. 
 
-![image.png](raport_files/image.png)
+![image.png](image.png)
 
 Nie pozwoliłby nam on wygrać zawodów, ale ten uznaliśmy go za bardzo dobry, biorąc pod uwagę nasze doświadczenie w tego typu projektach . Zaczynając pracę nad projektem, żaden z nas nie miał doświadczenia w dziedzinie uczenia maszynowego.
 
